@@ -1,0 +1,10 @@
+{
+    "brightness": 255,
+    "ambient_mode": 2,
+    "overrides": {
+        "red": ["A1", "A2", "A3", "A4", "A5", "A6"],
+        "blue": ["G1", "G2", "G3", "G4", "G5", "G6"],
+        "green": ["B1", "B2", "B3"],
+        "off": ["C1", "C2", "C3"]
+    }
+}

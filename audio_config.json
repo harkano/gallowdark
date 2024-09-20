@@ -1,0 +1,6 @@
+{
+    "volume": 50,
+    "music": "path/to/music.ogg",
+    "audio": "path/to/audio.ogg",
+    "play_audio_once": false
+}
