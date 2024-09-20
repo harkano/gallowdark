@@ -36,10 +36,10 @@ def get_base_color(ambient_mode):
         logging.info(f"Ambient Mode {ambient_mode} - Base Color: Default White")
     return color
 
-# Function to run demo_pattern2.py as a subprocess
+# Function to run startup_pattern.py as a subprocess
 def start_demo_pattern():
     logging.info("Starting demo pattern")
-    subprocess.Popen(["sudo", "python3", "demo_pattern2.py"])
+    subprocess.Popen(["sudo", "python3", "startup_pattern.py"])
 
 def apply_dynamic_ambient(strip, base_color, tile_mapping, stop_event, overrides, brightness):
     tiles = list(tile_mapping.keys())
@@ -137,7 +137,7 @@ current_config = load_light_config()  # Load the initial configuration
 brightness = current_config.get('brightness', 255)  # Default to 255 if brightness isn't specified
 stop_event = threading.Event()
 
-# Start demo_pattern2.py subprocess
+# Start subprocess
 start_demo_pattern()
 
 # Apply initial configuration
