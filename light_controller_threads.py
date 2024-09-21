@@ -39,7 +39,7 @@ def get_base_color(ambient_mode):
 # Function to run startup_pattern.py as a subprocess
 def start_demo_pattern():
     logging.info("Starting demo pattern")
-    result = subprocess.run(["sudo", "python3", "startup_pattern.py"]), check=True)
+    result = subprocess.run((["sudo", "python3", "startup_pattern.py"]), check=True)
     logging.info(f"Demo pattern finished with exit code {result.returncode}")
     
 
