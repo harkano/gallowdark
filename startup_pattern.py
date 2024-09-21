@@ -1,8 +1,12 @@
 import time
 import pygame
+import logging
 from rpi_ws281x import *
 import os
 from led_utils import init_strip, clear_leds, LED_COUNT_A, LED_PIN_A, LED_CHANNEL_A, LED_COUNT_B, LED_PIN_B, LED_CHANNEL_B, load_led_mapping, get_leds_for_tile
+
+# Initialize logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # Set the SDL audio driver to alsa
 os.environ['SDL_AUDIODRIVER'] = 'alsa'
