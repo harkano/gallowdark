@@ -39,7 +39,9 @@ def get_base_color(ambient_mode):
 # Function to run startup_pattern.py as a subprocess
 def start_demo_pattern():
     logging.info("Starting demo pattern")
-    subprocess.Popen(["sudo", "python3", "startup_pattern.py"])
+    result = subprocess.run(["sudo", "python3", "startup_pattern.py"]), check=True)
+    logging.info(f"Demo pattern finished with exit code {result.returncode}")
+    
 
 def apply_dynamic_ambient(strip, base_color, tile_mapping, stop_event, overrides, brightness):
     tiles = list(tile_mapping.keys())
