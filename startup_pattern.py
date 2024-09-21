@@ -58,7 +58,7 @@ def diagonal_demo(strip):
     ]
 
     # Path to the audio file
-    audio_file = 'audio/breaker_trimmed.m4a'
+    audio_file = 'audio/breaker_trimmed.ogg'
     intro_file = 'audio/uplink_established.ogg'
 
     play_audio(intro_file)
