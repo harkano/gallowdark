@@ -41,7 +41,7 @@ def play_audio(file_path):
     pygame.mixer.music.load(file_path)
     pygame.mixer.music.play()
 
-def diagonal_demo(strip):
+def diagonal_demo():
     grid_tiles = [
         ['A1', 'A-1'],
         ['A2', 'A-2', 'B1', 'B-1'],
@@ -67,20 +67,29 @@ def diagonal_demo(strip):
     for row in grid_tiles:
         play_audio(audio_file)  # Play audio for each row
         for tile in row:
-            leds = get_leds_for_tile(tile, 'a')
-            for led in leds:
-                strip.setPixelColor(led - 1, Color(255, 0, 0))  # Red color
-        strip.show()
+            leds_a = get_leds_for_tile(tile, 'a')
+            leds_b = get_leds_for_tile(tile, 'b')
+            for led in leds_a:
+                strip_a.setPixelColor(led - 1, Color(255, 0, 0))  # Red color
+            for led in leds_b:
+                strip_b.setPixelColor(led - 1, Color(255, 0, 0))  # Red color
+        strip_a.show()
+        strip_b.show()
         time.sleep(0.750)  # Adjust the speed of the demo here
 
     # Turn off diagonally
     for row in grid_tiles:
         for tile in row:
-            leds = get_leds_for_tile(tile, 'a')
-            for led in leds:
-                strip.setPixelColor(led - 1, Color(0, 0, 0))  # Turn off
-        strip.show()
+            leds_a = get_leds_for_tile(tile, 'a')
+            leds_b = get_leds_for_tile(tile, 'b')
+            for led in leds_a:
+                strip_a.setPixelColor(led - 1, Color(0, 0, 0))  # Turn off
+            for led in leds_b:
+                strip_b.setPixelColor(led - 1, Color(0, 0, 0))  # Turn off
+
+        strip_a.show()
+        strip_b.show()
         time.sleep(0.750)  # Adjust the speed of the demo here
 
 # Run the demo pattern
-diagonal_demo(strip_a)
+diagonal_demo()
