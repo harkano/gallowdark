@@ -8,6 +8,7 @@ import threading
 import subprocess
 from rpi_ws281x import PixelStrip, Color
 from led_utils import init_strip, clear_leds, LED_COUNT_A, LED_PIN_A, LED_CHANNEL_A, LED_COUNT_B, LED_PIN_B, LED_CHANNEL_B, load_led_mapping, get_leds_for_tile
+from startup_pattern import *
 
 # Initialize logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -38,10 +39,7 @@ def get_base_color(ambient_mode):
 
 # Function to run startup_pattern.py as a subprocess
 def start_demo_pattern():
-    logging.info("Starting demo pattern")
-    result = subprocess.run((["sudo", "python3", "startup_pattern.py"]), check=True)
-    logging.info(f"Demo pattern finished with exit code {result.returncode}")
-    
+    diagonal_demo()    
 
 def apply_dynamic_ambient(strip, base_color, tile_mapping, stop_event, overrides, brightness):
     tiles = list(tile_mapping.keys())
