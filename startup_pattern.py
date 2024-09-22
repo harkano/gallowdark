@@ -4,21 +4,9 @@ import pygame
 from led_utils import init_strip, clear_leds, LED_COUNT_A, LED_PIN_A, LED_CHANNEL_A, LED_COUNT_B, LED_PIN_B, LED_CHANNEL_B, load_led_mapping, get_leds_for_tile
 from rpi_ws281x import *
 
-# Set the SDL audio driver to alsa
-os.environ['SDL_AUDIODRIVER'] = 'alsa'
-# Specify the ALSA device
-os.environ['AUDIODEV'] = 'hw:1,0' #1,0 works for USB
-os.environ['XDG_RUNTIME_DIR'] = '/run/user/0'
-
-
-# Initialize Pygame mixer for audio playback
-pygame.mixer.init()
-
-startup_channel = pygame.mixer.Channel(2)
-
 def play_audio(file_path):
     pygame.mixer.music.load(file_path)
-    startup_channel.play()
+    pygame.mixer.music.play()
 
 def diagonal_demo(strip_a, strip_b):
     grid_tiles = [
