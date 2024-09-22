@@ -1,5 +1,15 @@
 import time
 
+# Set the SDL audio driver to alsa
+os.environ['SDL_AUDIODRIVER'] = 'alsa'
+# Specify the ALSA device
+os.environ['AUDIODEV'] = 'hw:1,0' #1,0 works for USB
+os.environ['XDG_RUNTIME_DIR'] = '/run/user/0'
+
+
+# Initialize Pygame mixer for audio playback
+pygame.mixer.init()
+
 def play_audio(file_path):
     pygame.mixer.music.load(file_path)
     pygame.mixer.music.play()
