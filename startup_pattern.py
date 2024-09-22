@@ -1,41 +1,4 @@
 import time
-import pygame
-import logging
-from rpi_ws281x import *
-import os
-from led_utils import init_strip, clear_leds, LED_COUNT_A, LED_PIN_A, LED_CHANNEL_A, LED_COUNT_B, LED_PIN_B, LED_CHANNEL_B, load_led_mapping, get_leds_for_tile
-
-# Initialize logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-
-# Set the SDL audio driver to alsa
-os.environ['SDL_AUDIODRIVER'] = 'alsa'
-# Specify the ALSA device
-os.environ['AUDIODEV'] = 'hw:1,0' #1,0 works for USB
-os.environ['XDG_RUNTIME_DIR'] = '/run/user/0'
-
-
-# Initialize Pygame mixer for audio playback
-pygame.mixer.init()
-
-# Load LED mappings
-tile_to_leds_a = load_led_mapping('config/board_a_leds.txt')
-tile_to_leds_b = load_led_mapping('config/board_b_leds.txt')
-
-# Initialize the LED strips
-strip_a = init_strip(LED_PIN_A, LED_COUNT_A, LED_CHANNEL_A)
-strip_b = init_strip(LED_PIN_B, LED_COUNT_B, LED_CHANNEL_B)
-
-# Check initialization
-if strip_a is None:
-    logging.error(f"Error initializing LED strip on pin {LED_PIN_A}")
-else:
-    logging.info(f"Successfully initialized LED strip on pin {LED_PIN_A}")
-
-if strip_b is None:
-    logging.error(f"Error initializing LED strip on pin {LED_PIN_B}")
-else:
-    logging.info(f"Successfully initialized LED strip on pin {LED_PIN_B}")
 
 def play_audio(file_path):
     pygame.mixer.music.load(file_path)
@@ -91,5 +54,3 @@ def diagonal_demo():
         strip_b.show()
         time.sleep(0.750)  # Adjust the speed of the demo here
 
-# Run the demo pattern
-diagonal_demo()
