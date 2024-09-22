@@ -14,23 +14,29 @@ import light_controller
 
 # Initialize logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+# Load the light controller
 current_light_config = load_light_config()  # Load the initial configuration
 brightness = current_light_config.get('brightness', 255)  # Default to 255 if brightness isn't specified
 stop_event = threading.Event()
 
 # Load the audio controller
+current_audio_config = load_audio_config()  # Load the initial configuration
 
 # Start subprocess
 start_demo_pattern(strip_a, strip_b)
 
-# Apply initial configuration
+# Begin audio
+play_audio_once_flag = False
+apply_audio_config(current_audio_config)
+
+# Apply initial light configuration
 if strip_a is not None:
     thread_a = threading.Thread(target=apply_dynamic_ambient, args=(strip_a, get_base_color(current_light_config['ambient_mode']), tile_to_leds_a, stop_event, current_light_config.get('overrides', {}), brightness))
     thread_a.start()
 if strip_b is not None:
     thread_b = threading.Thread(target=apply_dynamic_ambient, args=(strip_b, get_base_color(current_light_config['ambient_mode']), tile_to_leds_b, stop_event, current_light_config.get('overrides', {}), brightness))
     thread_b.start()
-
 
 # Apply tile overrides initially
 if 'overrides' in current_light_config:
