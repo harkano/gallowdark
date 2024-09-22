@@ -14,9 +14,11 @@ os.environ['XDG_RUNTIME_DIR'] = '/run/user/0'
 # Initialize Pygame mixer for audio playback
 pygame.mixer.init()
 
+startup_channel = pygame.mixer.Channel(2)
+
 def play_audio(file_path):
     pygame.mixer.music.load(file_path)
-    pygame.mixer.music.play()
+    startup_channel.play()
 
 def diagonal_demo(strip_a, strip_b):
     grid_tiles = [
