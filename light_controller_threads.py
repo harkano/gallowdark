@@ -38,8 +38,8 @@ def get_base_color(ambient_mode):
     return color
 
 # Function to run startup_pattern.py as a subprocess
-def start_demo_pattern():
-    diagonal_demo()    
+def start_demo_pattern(strip_a, strip_b):
+    diagonal_demo(strip_a,  strip_b)    
 
 def apply_dynamic_ambient(strip, base_color, tile_mapping, stop_event, overrides, brightness):
     tiles = list(tile_mapping.keys())
