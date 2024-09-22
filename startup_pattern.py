@@ -1,5 +1,6 @@
 import time
 import os
+import pygame
 
 # Set the SDL audio driver to alsa
 os.environ['SDL_AUDIODRIVER'] = 'alsa'
