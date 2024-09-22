@@ -1,4 +1,5 @@
 import time
+import os
 
 # Set the SDL audio driver to alsa
 os.environ['SDL_AUDIODRIVER'] = 'alsa'
