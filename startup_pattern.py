@@ -1,6 +1,8 @@
 import time
 import os
 import pygame
+from led_utils import init_strip, clear_leds, LED_COUNT_A, LED_PIN_A, LED_CHANNEL_A, LED_COUNT_B, LED_PIN_B, LED_CHANNEL_B, load_led_mapping, get_leds_for_tile
+
 
 # Set the SDL audio driver to alsa
 os.environ['SDL_AUDIODRIVER'] = 'alsa'
