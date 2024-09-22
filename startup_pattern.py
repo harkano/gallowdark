@@ -18,7 +18,7 @@ def play_audio(file_path):
     pygame.mixer.music.load(file_path)
     pygame.mixer.music.play()
 
-def diagonal_demo():
+def diagonal_demo(strip_a, strip_b):
     grid_tiles = [
         ['A1', 'A-1'],
         ['A2', 'A-2', 'B1', 'B-1'],
