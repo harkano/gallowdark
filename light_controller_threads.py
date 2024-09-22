@@ -138,7 +138,7 @@ brightness = current_config.get('brightness', 255)  # Default to 255 if brightne
 stop_event = threading.Event()
 
 # Start subprocess
-start_demo_pattern()
+start_demo_pattern(strip_a, strip_b)
 
 # Apply initial configuration
 if strip_a is not None:
