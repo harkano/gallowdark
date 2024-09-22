@@ -5,10 +5,10 @@ import random
 import math
 import os
 import threading
-import subprocess
 from rpi_ws281x import PixelStrip, Color
 from led_utils import init_strip, clear_leds, LED_COUNT_A, LED_PIN_A, LED_CHANNEL_A, LED_COUNT_B, LED_PIN_B, LED_CHANNEL_B, load_led_mapping, get_leds_for_tile
-from startup_pattern import *
+from startup_pattern import diagonal_demo
+import audio_controller
 
 # Initialize logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -137,6 +137,8 @@ current_config = load_light_config()  # Load the initial configuration
 brightness = current_config.get('brightness', 255)  # Default to 255 if brightness isn't specified
 stop_event = threading.Event()
 
+# Load the audio controller
+
 # Start subprocess
 start_demo_pattern(strip_a, strip_b)
 
@@ -148,11 +150,12 @@ if strip_b is not None:
     thread_b = threading.Thread(target=apply_dynamic_ambient, args=(strip_b, get_base_color(current_config['ambient_mode']), tile_to_leds_b, stop_event, current_config.get('overrides', {}), brightness))
     thread_b.start()
 
+
 # Apply tile overrides initially
 if 'overrides' in current_config:
     apply_tile_overrides(current_config['overrides'], brightness)
 
-def light_controller():
+def thread_controller():
     global current_config, thread_a, thread_b, brightness
     while not stop_event.is_set():
         config = load_light_config()
@@ -178,5 +181,5 @@ def light_controller():
 
         time.sleep(1)
 
-# Start the light controller in the main thread
-light_controller()
+# Start the thread controller in the main thread
+thread_controller()
