@@ -32,31 +32,18 @@ def play_audio_once(file_path):
     effect = pygame.mixer.Sound(file_path)
     effect.play()
 
-current_config = None
-play_audio_once_flag = False
-
-# Initial configuration load and music playback
-config = load_audio_config()
-apply_audio_config(config)
-current_config = config
-
-while True:
-    config = load_audio_config()
-    if config != current_config:
-        logging.info("Configuration changed.")
-        if config['music'] != current_config['music']:
-            logging.info("Music file changed.")
-            apply_audio_config(config)
-        if config['volume'] != current_config['volume']:
-            logging.info(f"Volume changed to: {config['volume']}")
-            pygame.mixer.music.set_volume(config['volume'] / 100)
-        current_config = config
-
+def audio_changed(config, current_config):
+    logging.info("Configuration changed.")
+    if config['music'] != current_config['music']:
+        logging.info("Music file changed.")
+        apply_audio_config(config)
+    if config['volume'] != current_config['volume']:
+        logging.info(f"Volume changed to: {config['volume']}")
+        pygame.mixer.music.set_volume(config['volume'] / 100)
+    
     # Check if we need to play the one-time audio file
     if config['play_audio_once'] and not play_audio_once_flag:
         play_audio_once(config['audio'])
         play_audio_once_flag = True
     elif not config['play_audio_once']:
         play_audio_once_flag = False
-
-    time.sleep(1)
