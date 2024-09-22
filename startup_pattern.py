@@ -67,10 +67,4 @@ def diagonal_demo(strip_a, strip_b):
         strip_a.show()
         strip_b.show()
         time.sleep(0.750)  # Adjust the speed of the demo here
-    strip_a.clear()
-    strip_b.clear()
-    strip_a.show()
-    strip_b.show()
-    pygame.mixer.music.stop()
-    pygame.quit()
 
