@@ -9,7 +9,7 @@ from rpi_ws281x import PixelStrip, Color
 from led_utils import init_strip, clear_leds, LED_COUNT_A, LED_PIN_A, LED_CHANNEL_A, LED_COUNT_B, LED_PIN_B, LED_CHANNEL_B, load_led_mapping, get_leds_for_tile
 from startup_pattern import diagonal_demo
 import audio_controller
-fromt audio_controller import load_audio_config, apply_audio_config, play_audio_once, audio_changed
+from audio_controller import load_audio_config, apply_audio_config, play_audio_once, audio_changed
 import light_controller
 from light_controller import load_light_config, get_base_color, apply_dynamic_ambient, apply_tile_overrides
 
