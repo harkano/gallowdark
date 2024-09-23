@@ -10,7 +10,7 @@ from led_utils import init_strip, clear_leds, LED_COUNT_A, LED_PIN_A, LED_CHANNE
 from startup_pattern import diagonal_demo
 import audio_controller
 import light_controller
-from light_controller import load_light_config, get_base_color, apply_dynamic_ambience, apply_tile_overrides
+from light_controller import load_light_config, get_base_color, apply_dynamic_ambient, apply_tile_overrides
 
 # Initialize logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
