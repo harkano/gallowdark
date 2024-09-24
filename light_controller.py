@@ -1,5 +1,6 @@
 from rpi_ws281x import PixelStrip, Color
 from led_utils import init_strip, clear_leds, LED_COUNT_A, LED_PIN_A, LED_CHANNEL_A, LED_COUNT_B, LED_PIN_B, LED_CHANNEL_B, load_led_mapping, get_leds_for_tile
+from audio_controller import play_audio_once
 import json
 import time
 import logging
