@@ -1,6 +1,6 @@
 {
     "volume": 50,
-    "music": "path/to/music.ogg",
-    "audio": "path/to/audio.ogg",
+    "music": "music/gallowdark.ogg",
+    "audio": "",
     "play_audio_once": false
 }
