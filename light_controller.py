@@ -107,8 +107,11 @@ def diagonal_demo(strip_a, strip_b):
         strip_b.show()
         time.sleep(0.750)  # Adjust the speed of the demo here
 
+    audio_file = 'audio/breaker_powerdown.ogg'
+    end_file = 'audio/breaker_powerdown_end.ogg'
     # Turn off diagonally
     for row in grid_tiles:
+        play_audio_once(audio_file)  # Play audio for each row
         for tile in row:
             leds_a = get_leds_for_tile(tile, 'a')
             leds_b = get_leds_for_tile(tile, 'b')
@@ -120,6 +123,7 @@ def diagonal_demo(strip_a, strip_b):
         strip_a.show()
         strip_b.show()
         time.sleep(0.750)  # Adjust the speed of the demo here
+        play_audio_once(end_file)
 
 
 def apply_tile_overrides(overrides, brightness):
