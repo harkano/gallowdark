@@ -512,11 +512,10 @@
       }
     }
   ],
-  "Kill Team: Join Ops Mission Pack": [
+  "Kill Team: Joint Ops Mission Pack": [
     {
       "number": "1.1",
-      "name": "Reinforced Chamber",
-      "audio": "audio/itd_1_1.ogg",
+      "name": "Breach",
       "overrides": {
         "red": [
           "A1",
@@ -532,14 +531,19 @@
           "G3",
           "G4",
           "G5",
-          "G6"
+          "G6",
+          "F1",
+          "F2",
+          "F3",
+          "F4",
+          "F5",
+          "F6"
         ]
       }
     },
     {
       "number": "1.2",
-      "name": "Airlocked",
-      "audio": "audio/itd_1_2.ogg",
+      "name": "Sabotage",
       "overrides": {
         "red": [
           "A1",
@@ -557,52 +561,20 @@
           "D6",
           "E6",
           "F6",
-          "G6"
+          "G6",
+          "A5",
+          "B5",
+          "C5",
+          "D5",
+          "E5",
+          "F5",
+          "G5"
         ]
       }
     },
     {
       "number": "1.3",
-      "name": "Subsidence",
-      "audio": "audio/itd_1_3.ogg",
-      "overrides": {
-        "red": [
-          "A1",
-          "B1",
-          "A2",
-          "B2"
-        ],
-        "blue": [
-          "A6",
-          "B6",
-          "A5",
-          "B5"
-        ]
-      }
-    },
-    {
-      "number": "2.1",
-      "name": "Desperate Raid",
-      "audio": "audio/itd_2_1.ogg",
-      "overrides": {
-        "red": [
-          "A1",
-          "B1",
-          "A2",
-          "B2"
-        ],
-        "blue": [
-          "F5",
-          "F6",
-          "G5",
-          "G6"
-        ]
-      }
-    },
-    {
-      "number": "2.2",
-      "name": "Deadly Hangar",
-      "audio": "audio/itd_2_2.ogg",
+      "name": "Escape",
       "overrides": {
         "red": [
           "A1",
@@ -614,32 +586,18 @@
           "G1"
         ],
         "blue": [
+          "A4",
+          "A5",
           "A6",
+          "B5",
           "B6",
           "C6",
-          "D6",
           "E6",
+          "F5",
           "F6",
+          "G4",
+          "G5",
           "G6"
-        ]
-      }
-    },
-    {
-      "number": "2.3",
-      "name": "Maze Breakout",
-      "audio": "audio/itd_2_3.ogg",
-      "overrides": {
-        "red": [
-          "A1",
-          "A2",
-          "A3",
-          "A4"
-        ],
-        "blue": [
-          "F1",
-          "F2",
-          "G1",
-          "G2"
         ]
       }
     }
