@@ -24,7 +24,7 @@ stop_event = threading.Event()
 current_audio_config = load_audio_config()  # Load the initial configuration
 
 # Start subprocess
-diagonal_demo(strip_a, strip_b)
+start_demo_pattern()
 
 # Begin audio
 play_audio_once_flag = False
