@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control Panel</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Control Panel</h1>
+
+    <h2>Audio</h2>
+    <label for="volume">Volume:</label>
+    <input type="range" id="volume" name="volume" min="0" max="100" value="{{ audio_config.get('volume', 100) }}">
+    <br>
+    <label for="music">Music Track:</label>
+    <input type="text" id="music" name="music" value="{{ audio_config.get('music', '') }}">
+    <br>
+    <label for="audio">Audio File:</label>
+    <input type="text" id="audio" name="audio" value="{{ audio_config.get('audio', '') }}">
+    <br>
+    <label for="play_audio_once">Play Audio Once:</label>
+    <input type="checkbox" id="play_audio_once" name="play_audio_once" {% if audio_config.get('play_audio_once', False) %}checked{% endif %}>
+    <br>
+    <button onclick="updateAudio()">Update Audio</button>
+
+    <h2>Lights</h2>
+    <label for="brightness">Brightness:</label>
+    <input type="range" id="brightness" name="brightness" min="0" max="255" value="{{ light_config.get('brightness', 128) }}">
+    <br>
+    <label for="ambient_mode">Ambient Mode:</label>
+    <input type="number" id="ambient_mode" name="ambient_mode" value="{{ light_config.get('ambient_mode', 0) }}">
+    <br>
+    <label for="mission_mode">Mission Mode:</label>
+    <input type="text" id="mission_mode" name="mission_mode" value="{{ light_config.get('mission_mode', '') }}">
+    <br>
+    <button onclick="updateLights()">Update Lights</button>
+
+    <h2>Missions</h2>
+    <label for="pack">Select Mission Pack:</label>
+    <select id="pack" name="pack" onchange="fetchMissions()">
+        <option value="">-- Select a Pack --</option>
+        {% for pack in missions %}
+            <option value="{{ pack }}">{{ pack }}</option>
+        {% endfor %}
+    </select>
+    <br>
+    <label for="mission">Select Mission:</label>
+    <select id="mission" name="mission">
+        <option value="">-- Select a Mission --</option>
+    </select>
+    <br>
+    <button onclick="applyMission()">Apply Mission</button>
+
+    <script>
+        function updateAudio() {
+            const data = {
+                volume: Number(document.getElementById('volume').value),
+                music: document.getElementById('music').value,
+                audio: document.getElementById('audio').value,
+                play_audio_once: document.getElementById('play_audio_once').checked
+            };
+            $.ajax({
+                url: '/update_audio',
+                type: 'POST',
+                data: JSON.stringify(data),
+                contentType: 'application/json',
+                success: function(response) {
+                    console.log('Audio update response:', response);
+                }
+            });
+        }
+
+        function updateLights() {
+            const data = {
+                brightness: Number(document.getElementById('brightness').value),
+                ambient_mode: Number(document.getElementById('ambient_mode').value),
+                mission_mode: document.getElementById('mission_mode').value
+            };
+            $.ajax({
+                url: '/update_lights',
+                type: 'POST',
+                data: JSON.stringify(data),
+                contentType: 'application/json',
+                success: function(response) {
+                    console.log('Lights update response:', response);
+                }
+            });
+        }
+
+        function fetchMissions() {
+            const pack = document.getElementById('pack').value;
+            $.ajax({
+                url: '/get_missions',
+                type: 'POST',
+                data: JSON.stringify({ pack }),
+                contentType: 'application/json',
+                success: function(missions) {
+                    const missionSelect = document.getElementById('mission');
+                    missionSelect.innerHTML = '<option value="">-- Select a Mission --</option>';
+                    missions.forEach(mission => {
+                        missionSelect.innerHTML += `<option value='${JSON.stringify(mission)}'>${mission.number}: ${mission.name}</option>`;
+                    });
+                }
+            });
+        }
+
+        function applyMission() {
+            const missionData = JSON.parse(document.getElementById('mission').value);
+            $.ajax({
+                url: '/apply_mission',
+                type: 'POST',
+                data: JSON.stringify(missionData),
+                contentType: 'application/json',
+                success: function(response) {
+                    console.log('Mission applied:', response);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
