@@ -66,5 +66,29 @@ def apply_mission():
     
     return jsonify({"status": "Mission applied successfully"})
 
+@app.route('/update_ambience', methods=['POST'])
+def update_ambience():
+    data = request.json
+    ambient_mode = data.get('ambient_mode')
+    music = data.get('music')
+
+    # Update light_config.json with the selected ambient_mode
+    light_config = load_config('light_config.json')
+    light_config['ambient_mode'] = ambient_mode
+    log_data(light_config, 'light_config.json')
+
+    # Update audio_config.json with the selected music track
+    audio_config = load_config('audio_config.json')
+    audio_config['music'] = music
+    log_data(audio_config, 'audio_config.json')
+
+    # Signal the controllers for lights and audio changes
+    with open('lights_changed', 'w') as f:
+        f.write("1")
+    with open('audio_changed', 'w') as f:
+        f.write("1")
+
+    return jsonify({"status": "Ambience applied successfully"})
+    
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=3000)
