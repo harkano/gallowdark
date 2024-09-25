@@ -454,23 +454,111 @@
     },
     {
       "name": "Get The Codes Out",
-      "number": "2.1"
+      "number": "2.1",
+      "overrides": {
+        "red": [
+          "G5",
+          "G3",
+          "E6",
+          "A-2",
+          "A-3",
+          "B-6"
+        ],
+        "blue": [
+          "A3",
+          "A4",
+          "A5",
+          "B3",
+          "B4",
+          "B5"
+        ]
+      }
     },
     {
       "name": "Bridge Assault",
-      "number": "2.2"
+      "number": "2.2",
+      "overrides": {
+        "red": [
+          "A3",
+          "A4",
+          "A5",
+          "A-5",
+          "A-6",
+          "B-6"
+        ],
+        "blue": [
+          "D5",
+          "D-3",
+          "G6",
+          "G1",
+          "F-3",
+          "G-5"
+        ]
+      }
     },
     {
       "name": "Crippling Sabotage",
-      "number": "2.3"
+      "number": "2.3",
+      "overrides": {
+        "red": [
+          "B6",
+          "C6",
+          "D6",
+          "F6",
+          "G6",
+          "G5"
+        ],
+        "blue": [
+          "D2",
+          "C-6",
+          "D-6",
+          "G-6"
+        ]
+      }
     },
     {
       "name": "Stowaway Insurrection",
-      "number": "2.4"
+      "number": "2.4",
+      "overrides": {
+        "red": [
+          "C1",
+          "C-1",
+          "E1",
+          "E-1",
+          "G-6"
+        ],
+        "blue": [
+          "A6",
+          "A-6",
+          "E6",
+          "E-6"
+        ]
+      }
     },
     {
       "name": "Cryovault Heist",
-      "number": "2.5"
+      "number": "2.5",
+      "overrides": {
+        "red": [
+          "D5",
+          "D6",
+          "C1",
+          "B-1",
+          "E-4",
+          "E-5"
+        ],
+        "blue": [
+          "G1",
+          "G2",
+          "G4",
+          "G5"
+        ],
+        "green": [
+          "A1",
+          "A-1"
+        ]
+        
+      }
     },
     {
       "name": "Demolition Corps",
@@ -487,7 +575,8 @@
         "blue": [
           "A-2",
           "A-3",
-          "A-4"
+          "A-4",
+          "G-1"
         ],
         "green": [
           "B-6",
