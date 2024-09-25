@@ -7,4 +7,5 @@
         "green": ["B1", "B2", "B3"],
         "off": ["C1", "C2", "C3"]
     }
+    "show_override":false
 }
