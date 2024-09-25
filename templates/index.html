@@ -8,7 +8,17 @@
 </head>
 <body>
     <h1>Control Panel</h1>
-
+    
+    <h2>Ambience</h2>
+    <label for="ambience_mode">Mode:</label>
+    <select id="ambience_mode" name="ambience_mode" onchange="updateAmbience()">
+        <option value="2|music/gallowdark.ogg">Gallowdark</option>
+        <option value="3|music/gallowdeep.ogg">Gallowdeep</option>
+        <option value="4|music/gallowhive.ogg">Gallowhive</option>
+        <option value="5|music/gallowtomb.ogg">Gallowtomb</option>
+    </select>
+    <br>
+    
     <h2>Audio</h2>
     <label for="volume">Volume:</label>
     <input type="range" id="volume" name="volume" min="0" max="100" value="{{ audio_config.get('volume', 100) }}">
@@ -115,6 +125,27 @@
                 contentType: 'application/json',
                 success: function(response) {
                     console.log('Mission applied:', response);
+                }
+            });
+        }
+        
+        function updateAmbience() {
+            const ambienceData = document.getElementById('ambience_mode').value.split('|');
+            const ambient_mode = Number(ambienceData[0]);
+            const music_track = ambienceData[1];
+    
+            const data = {
+                ambient_mode: ambient_mode,
+                music: music_track
+            };
+    
+            $.ajax({
+                url: '/update_ambience',
+                type: 'POST',
+                data: JSON.stringify(data),
+                contentType: 'application/json',
+                success: function(response) {
+                    console.log('Ambience update response:', response);
                 }
             });
         }
