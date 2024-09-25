@@ -11,6 +11,13 @@ import audio_controller
 from audio_controller import load_audio_config, apply_audio_config, play_audio_once, audio_changed
 import light_controller
 from light_controller import load_light_config, get_base_color, apply_dynamic_ambient, apply_tile_overrides, start_demo_pattern, strip_a, strip_b, tile_to_leds_a, tile_to_leds_b
+import argparse
+
+# Parse command-line arguments
+parser = argparse.ArgumentParser(description="Control threads in the controller.")
+parser.add_argument('--skip-startup', action='store_true', help='Skip running the startup demo pattern.')
+
+args = parser.parse_args()
 
 # Initialize logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -23,8 +30,11 @@ stop_event = threading.Event()
 # Load the audio controller
 current_audio_config = load_audio_config()  # Load the initial configuration
 
-# Start subprocess
-start_demo_pattern()
+# Only run start_demo_pattern if --skip-startup is NOT passed
+if not args.skip_startup:
+    start_demo_pattern()
+else:
+    print("Skipping startup demo pattern...")
 
 # Begin audio
 play_audio_once_flag = False
