@@ -34,6 +34,7 @@ def update_audio():
 @app.route('/update_lights', methods=['POST'])
 def update_lights():
     data = request.json
+    data['show_override'] = bool(data.get('show_override', False))
     log_data(data, 'light_config.json')
     return jsonify({"status": "success"})
 
