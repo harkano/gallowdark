@@ -37,14 +37,15 @@ def get_base_color(ambient_mode):
 def start_demo_pattern():
     diagonal_demo(strip_a,  strip_b)    
 
-def apply_dynamic_ambient(strip, base_color, tile_mapping, stop_event, overrides, brightness):
+def apply_dynamic_ambient(strip, base_color, tile_mapping, stop_event, overrides, show_override, brightness):
     tiles = list(tile_mapping.keys())
     phases = {tile: random.random() * 2 * math.pi for tile in tiles}  # Random phase for each tile
 
     cycle_duration = 5  # Duration of one full cycle in seconds
     steps_per_cycle = 100  # Number of steps in one full cycle
 
-    override_tiles = {tile for tiles in overrides.values() for tile in tiles}
+    if show_override:
+        override_tiles = {tile for tiles in overrides.values() for tile in tiles}
 
     while not stop_event.is_set():  # Run the dynamic effect continuously
         for step in range(steps_per_cycle):
@@ -121,9 +122,10 @@ def diagonal_demo(strip_a, strip_b):
                 strip_b.setPixelColor(led - 1, Color(0, 0, 0))  # Turn off
 
         strip_a.show()
-        strip_b.show()
-        time.sleep(0.750)  # Adjust the speed of the demo here
-        play_audio_once(end_file)
+        if strip_b is not None:
+            strip_b.show()
+        time.sleep(0.375)  # Adjust the speed of the demo here
+    play_audio_once(end_file)
 
 
 def apply_tile_overrides(overrides, brightness):
