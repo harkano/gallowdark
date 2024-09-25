@@ -44,6 +44,7 @@ def apply_dynamic_ambient(strip, base_color, tile_mapping, stop_event, overrides
     cycle_duration = 5  # Duration of one full cycle in seconds
     steps_per_cycle = 100  # Number of steps in one full cycle
 
+    override_tiles = []
     if show_override:
         override_tiles = {tile for tiles in overrides.values() for tile in tiles}
 
