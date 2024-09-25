@@ -56,10 +56,10 @@ def thread_controller():
 
             # Start new threads for dynamic ambient
             if strip_a is not None:
-                thread_a = threading.Thread(target=apply_dynamic_ambient, args=(strip_a, get_base_color(current_light_config['ambient_mode']), tile_to_leds_a, stop_event, current_light_config.get('overrides', {}), brightness))
+                thread_a = threading.Thread(target=apply_dynamic_ambient, args=(strip_a, get_base_color(current_light_config['ambient_mode']), tile_to_leds_a, stop_event, current_light_config.get('overrides', {}), current_light_config.get('show_override'), brightness))
                 thread_a.start()
             if strip_b is not None:
-                thread_b = threading.Thread(target=apply_dynamic_ambient, args=(strip_b, get_base_color(current_light_config['ambient_mode']), tile_to_leds_b, stop_event, current_light_config.get('overrides', {}), brightness))
+                thread_b = threading.Thread(target=apply_dynamic_ambient, args=(strip_b, get_base_color(current_light_config['ambient_mode']), tile_to_leds_b, stop_event, current_light_config.get('overrides', {}), current_light_config.get('show_override'), brightness))
                 thread_b.start()
 
             # Apply tile overrides
