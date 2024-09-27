@@ -29,6 +29,7 @@ stop_event = threading.Event()
 
 # Load the audio controller
 current_audio_config = load_audio_config()  # Load the initial configuration
+stop_audio_event = threading.Event()
 
 # Only run start_demo_pattern if --skip-startup is NOT passed
 if not args.skip_startup:
@@ -38,7 +39,8 @@ else:
 
 # Begin audio
 play_audio_once_flag = False
-apply_audio_config(current_audio_config)
+thread_audio = threading.Thread(target=apply_audio_config, args=(current_audio_config))
+thread_audio.start()
 
 # Apply initial light configuration
 if strip_a is not None:
@@ -75,7 +77,15 @@ def thread_controller():
             # Apply tile overrides
             if 'overrides' in current_light_config:
                 apply_tile_overrides(current_light_config['overrides'], brightness)
-
+        audio_config = load_audio_config()
+        if audio_config != current_audio_config:
+            logging.info("Audio Configuration changed.")
+            stop_event.set()
+            time.sleep(1)
+            stop_event.clear()
+            current_audio_config = audio_config
+            thread_audio = threading.Thread(target=apply_audio_config, args=(current_audio_config))
+            thread_audio.start()
         time.sleep(1)
 
 # Start the thread controller in the main thread
