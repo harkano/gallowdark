@@ -55,9 +55,10 @@ if 'overrides' in current_light_config:
     apply_tile_overrides(current_light_config['overrides'], brightness)
 
 def thread_controller():
-    global current_light_config, thread_a, thread_b, brightness
+    global current_light_config, thread_a, thread_b, brightness, current_audio_config
     while not stop_event.is_set():
         config = load_light_config()
+        audio_config = load_audio_config()
         if config != current_light_config:
             logging.info("Configuration changed.")
             stop_event.set()
