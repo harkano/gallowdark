@@ -16,6 +16,8 @@ def load_light_config():
 
 def get_base_color(ambient_mode):
     # Example function to get base color based on ambient mode
+    logging.info(f"Received ambient_mode: {ambient_mode}")
+
     if ambient_mode == 2: #Gallowdark
         color = (255, 68, 0)  # Dark Orange
         logging.info(f"Ambient Mode {ambient_mode} - Base Color: Dark Orange")
