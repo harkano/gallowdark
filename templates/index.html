@@ -38,9 +38,6 @@
     <label for="brightness">Brightness:</label>
     <input type="range" id="brightness" name="brightness" min="0" max="255" value="{{ light_config.get('brightness', 128) }}">
     <br>
-    <label for="ambient_mode">Ambient Mode:</label>
-    <input type="number" id="ambient_mode" name="ambient_mode" value="{{ light_config.get('ambient_mode', 0) }}">
-    <br>
     <label for="show_override">Show Override:</label>
     <input type="checkbox" id="show_override" name="show_override" {% if light_config.get('show_override', False) %}checked{% endif %}>
 
@@ -85,7 +82,6 @@
         function updateLights() {
             const data = {
                 brightness: Number(document.getElementById('brightness').value),
-                ambient_mode: Number(document.getElementById('ambient_mode').value),
                 show_override: document.getElementById('show_override').checked  // New toggle for show_override
             };
             $.ajax({
