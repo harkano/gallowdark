@@ -39,7 +39,7 @@ else:
 
 # Begin audio
 play_audio_once_flag = False
-thread_audio = threading.Thread(target=apply_audio_config, args=(current_audio_config))
+thread_audio = threading.Thread(target=apply_audio_config, args=(current_audio_config,))
 thread_audio.start()
 
 # Apply initial light configuration
@@ -85,7 +85,7 @@ def thread_controller():
             time.sleep(1)
             stop_event.clear()
             current_audio_config = audio_config
-            thread_audio = threading.Thread(target=apply_audio_config, args=(current_audio_config))
+            thread_audio = threading.Thread(target=apply_audio_config, args=(current_audio_config,))
             thread_audio.start()
         time.sleep(1)
 
