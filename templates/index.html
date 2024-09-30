@@ -140,35 +140,46 @@
             });
         }
 
-        function fetchMissions() {
-            const pack = document.getElementById('pack').value;
-            $.ajax({
-                url: '/get_missions',
-                type: 'POST',
-                data: JSON.stringify({ pack }),
-                contentType: 'application/json',
-                success: function(missions) {
-                    const missionSelect = document.getElementById('mission');
-                    missionSelect.innerHTML = '<option value="">-- Select a Mission --</option>';
-                    missions.forEach(mission => {
-                        missionSelect.innerHTML += `<option value='${JSON.stringify(mission)}'>${mission.number}: ${mission.name}</option>`;
-                    });
-                }
-            });
+    function fetchMissions() {
+        const pack = document.getElementById('pack').value;
+        $.ajax({
+            url: '/get_missions',
+            type: 'POST',
+            data: JSON.stringify({ pack }),
+            contentType: 'application/json',
+            success: function(missions) {
+                const missionSelect = document.getElementById('mission');
+                missionSelect.innerHTML = '<option value="">-- Select a Mission --</option>';
+                missions.forEach(mission => {
+                    missionSelect.innerHTML += `<option value='${JSON.stringify(mission)}'>${mission.number}: ${mission.name}</option>`;
+                });
+                // Add the "None (Clear Overrides)" option to every pack
+                missionSelect.innerHTML += `<option value='none'>None (Clear Overrides)</option>`;
+            }
+        });
+    }
+
+    function applyMission() {
+        const missionValue = document.getElementById('mission').value;
+
+        // Handle 'None (Clear Overrides)' special case
+        let missionData;
+        if (missionValue === 'none') {
+            missionData = "none";  // Send the 'none' value to the server
+        } else {
+            missionData = JSON.parse(missionValue);
         }
 
-        function applyMission() {
-            const missionData = JSON.parse(document.getElementById('mission').value);
-            $.ajax({
-                url: '/apply_mission',
-                type: 'POST',
-                data: JSON.stringify(missionData),
-                contentType: 'application/json',
-                success: function(response) {
-                    console.log('Mission applied:', response);
-                }
-            });
-        }
+        $.ajax({
+            url: '/apply_mission',
+            type: 'POST',
+            data: JSON.stringify(missionData),
+            contentType: 'application/json',
+            success: function(response) {
+                console.log('Mission applied:', response);
+            }
+        });
+    }
         
         function updateAmbience() {
             const ambienceData = document.getElementById('ambience_mode').value.split('|');
