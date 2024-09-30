@@ -81,9 +81,9 @@ def thread_controller():
         audio_config = load_audio_config()
         if audio_config != current_audio_config:
             logging.info("Audio Configuration changed.")
-            stop_event.set()
-            time.sleep(1)
-            stop_event.clear()
+            #stop_event.set()
+            #time.sleep(1)
+            #stop_event.clear()
             current_audio_config = audio_config
             thread_audio = threading.Thread(target=apply_audio_config, args=(current_audio_config,))
             thread_audio.start()
