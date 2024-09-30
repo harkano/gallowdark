@@ -5,10 +5,18 @@ import os
 app = Flask(__name__)
 
 # Function to log data
-def log_data(data, filename):
+def log_data(updated_data, filename):
+    # Load existing data from the file
+    existing_data = load_config(filename)
+
+    # Update the existing data with the new data
+    existing_data.update(updated_data)
+
+    # Write the updated data back to the file
     with open(filename, 'w') as file:
-        json.dump(data, file, indent=4)
-    print(f"Updated {filename} with data: {data}")
+        json.dump(existing_data, file, indent=4)
+
+    print(f"Updated {filename} with data: {updated_data}")
 
 def load_config(filename):
     if os.path.exists(filename):
