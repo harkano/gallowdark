@@ -108,6 +108,14 @@ def update_ambience():
         f.write("1")
 
     return jsonify({"status": "Ambience applied successfully"})
-    
+
+@app.route('/get_music_tracks', methods=['GET'])
+def get_music_tracks():
+    music_dir = 'music/'
+    # List all files ending with .ogg in the music directory
+    music_files = [f for f in os.listdir(music_dir) if f.endswith('.ogg')]
+    return jsonify(music_files)
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=3000)
