@@ -42,8 +42,19 @@ def update_audio():
 @app.route('/update_lights', methods=['POST'])
 def update_lights():
     data = request.json
-    data['show_override'] = bool(data.get('show_override', False))
-    log_data(data, 'light_config.json')
+    light_config = load_config('light_config.json')
+    
+    # Update brightness, show_override, and effect_type
+    light_config['brightness'] = data.get('brightness', light_config.get('brightness', 128))
+    light_config['effect_type'] = data.get('effect_type', light_config.get('effect_type', 'pulse'))  # Default to 'pulse'
+    light_config['show_override'] = bool(data.get('show_override', light_config.get('show_override', False)))
+
+    log_data(light_config, 'light_config.json')
+    
+    # Signal the lights controller that there's been a change
+    with open('lights_changed', 'w') as f:
+        f.write("1")
+    
     return jsonify({"status": "success"})
 
 @app.route('/get_missions', methods=['POST'])
