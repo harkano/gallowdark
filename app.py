@@ -36,8 +36,21 @@ def index():
 @app.route('/update_audio', methods=['POST'])
 def update_audio():
     data = request.json
-    log_data(data, 'audio_config.json')
+    audio_config = load_config('audio_config.json')
+
+    # Only update the music track if a valid one is selected
+    if data.get('music') and data['music'] != "-- Select a Track --":
+        audio_config['music'] = data['music']
+    
+    # Update other fields
+    audio_config['volume'] = data['volume']
+    audio_config['audio'] = data['audio']
+    audio_config['play_audio_once'] = data['play_audio_once']
+    
+    log_data(audio_config, 'audio_config.json')
+    
     return jsonify({"status": "success"})
+
 
 @app.route('/update_lights', methods=['POST'])
 def update_lights():
@@ -67,23 +80,32 @@ def get_missions():
 @app.route('/apply_mission', methods=['POST'])
 def apply_mission():
     mission = request.json
-    # Update light_config.json with overrides from the mission
+
     light_config = load_config('light_config.json')
-    light_config['overrides'] = mission['overrides']
-    log_data(light_config, 'light_config.json')
-    
-    # Update audio_config.json with the mission's audio file
-    audio_config = load_config('audio_config.json')
-    audio_config['audio'] = mission['audio']
-    log_data(audio_config, 'audio_config.json')
-    
+
+    if mission == "none":
+        # Clear the overrides
+        light_config['overrides'] = {}
+        log_data(light_config, 'light_config.json')
+        print("Cleared light overrides.")
+    else:
+        # Apply mission overrides
+        light_config['overrides'] = mission['overrides']
+        log_data(light_config, 'light_config.json')
+
+        # Update audio_config.json with the mission's audio file
+        audio_config = load_config('audio_config.json')
+        audio_config['audio'] = mission['audio']
+        log_data(audio_config, 'audio_config.json')
+
     # Signal the controllers
     with open('lights_changed', 'w') as f:
         f.write("1")
     with open('audio_changed', 'w') as f:
         f.write("1")
-    
+
     return jsonify({"status": "Mission applied successfully"})
+
 
 @app.route('/update_ambience', methods=['POST'])
 def update_ambience():
