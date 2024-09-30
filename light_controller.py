@@ -61,7 +61,7 @@ def get_base_color(ambient_mode):
 def start_demo_pattern():
     diagonal_demo(strip_a,  strip_b)    
 
-def apply_dynamic_ambient(strip, base_color, tile_mapping, stop_event, overrides, show_override, brightness):
+def apply_dynamic_ambient(strip, base_color, tile_mapping, stop_event, overrides, show_override, brightness, effect_type="pulse"):
     tiles = list(tile_mapping.keys())
     phases = {tile: random.random() * 2 * math.pi for tile in tiles}  # Random phase for each tile
 
@@ -76,17 +76,31 @@ def apply_dynamic_ambient(strip, base_color, tile_mapping, stop_event, overrides
         for step in range(steps_per_cycle):
             if stop_event.is_set():
                 break
-            brightness_factor = (1 + math.sin(2 * math.pi * step / steps_per_cycle)) / 2  # Sinusoidal factor between 0 and 1
+
+            brightness_factor = (1 + math.sin(2 * math.pi * step / steps_per_cycle)) / 2  # Default pulsing
+
+            if effect_type == "flicker":
+                # Random flicker effect (intensity changes per tile)
+                brightness_factor = random.random()
+            elif effect_type == "wave":
+                # Wave effect: A sinusoidal brightness factor based on the tile index
+                wave_position = (step / steps_per_cycle) * len(tiles)
+                brightness_factor = math.sin((tiles.index(tile) - wave_position) * 2 * math.pi / len(tiles)) / 2 + 0.5
+
             for tile in tiles:
                 if tile in override_tiles:
                     continue  # Skip tiles that have overrides
                 leds = tile_mapping[tile]
                 phase = phases[tile]
-                brightness_factor = (1 + math.sin(2 * math.pi * step / steps_per_cycle + phase)) / 2  # Sinusoidal factor between 0 and 1
+
+                if effect_type == "pulse" or effect_type == "flicker":
+                    brightness_factor = (1 + math.sin(2 * math.pi * step / steps_per_cycle + phase)) / 2
+
                 # Adjust the base color based on the brightness factor and global brightness
                 r = int(base_color[0] * brightness_factor * brightness / 255)
                 g = int(base_color[1] * brightness_factor * brightness / 255)
                 b = int(base_color[2] * brightness_factor * brightness / 255)
+                
                 for led in leds:
                     strip.setPixelColor(led - 1, Color(r, g, b))
             strip.show()
