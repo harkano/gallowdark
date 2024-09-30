@@ -84,19 +84,22 @@ def apply_mission():
     light_config = load_config('light_config.json')
 
     if mission == "none":
-        # Clear the overrides
+        # Clear the overrides when "none" is selected
         light_config['overrides'] = {}
         log_data(light_config, 'light_config.json')
         print("Cleared light overrides.")
     else:
         # Apply mission overrides
-        light_config['overrides'] = mission['overrides']
+        light_config['overrides'] = mission.get('overrides', {})  # Get overrides or empty dict
         log_data(light_config, 'light_config.json')
 
-        # Update audio_config.json with the mission's audio file
+        # Update audio_config.json with the mission's audio file (if present)
         audio_config = load_config('audio_config.json')
-        audio_config['audio'] = mission['audio']
-        log_data(audio_config, 'audio_config.json')
+        if 'audio' in mission and mission['audio']:  # Check if 'audio' exists and is not empty
+            audio_config['audio'] = mission['audio']
+            log_data(audio_config, 'audio_config.json')
+        else:
+            print("No audio for this mission, skipping audio update.")
 
     # Signal the controllers
     with open('lights_changed', 'w') as f:
