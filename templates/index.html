@@ -71,9 +71,11 @@
     <label for="mission">Select Mission:</label>
     <select id="mission" name="mission">
         <option value="">-- Select a Mission --</option>
+        <option value="none">None (Clear Overrides)</option>  <!-- None option added here -->
     </select>
     <br>
     <button onclick="applyMission()">Apply Mission</button>
+
 
     <script>
     $(document).ready(function() {
@@ -96,23 +98,30 @@
         });
     }
         
-        function updateAudio() {
-            const data = {
-                volume: Number(document.getElementById('volume').value),
-                music: document.getElementById('music').value,
-                audio: document.getElementById('audio').value,
-                play_audio_once: document.getElementById('play_audio_once').checked
-            };
-            $.ajax({
-                url: '/update_audio',
-                type: 'POST',
-                data: JSON.stringify(data),
-                contentType: 'application/json',
-                success: function(response) {
-                    console.log('Audio update response:', response);
-                }
-            });
-        }
+ function updateAudio() {
+        const selectedMusic = document.getElementById('music').value;
+        const currentMusic = "{{ audio_config.get('music', '') }}";  // Get current music track from config
+
+        // Only set the music field if a track is selected, otherwise keep the existing track
+        const musicToSet = selectedMusic ? `music/${selectedMusic}` : currentMusic;
+
+        const data = {
+            volume: Number(document.getElementById('volume').value),
+            music: musicToSet,  // Use the selected music or the current one
+            audio: document.getElementById('audio').value,
+            play_audio_once: document.getElementById('play_audio_once').checked
+        };
+        
+        $.ajax({
+            url: '/update_audio',
+            type: 'POST',
+            data: JSON.stringify(data),
+            contentType: 'application/json',
+            success: function(response) {
+                console.log('Audio update response:', response);
+            }
+        });
+    }
 
         function updateLights() {
             const data = {
