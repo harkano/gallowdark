@@ -28,7 +28,7 @@ def get_base_color(ambient_mode):
         color = (48, 25, 52)  # Purple
         logging.info(f"Ambient Mode {ambient_mode} - Base Color: Dark Purple")
     elif ambient_mode == 5: # Gallowtomb
-        color = (1, 80, 32)  # Dark Green
+        color = (1, 100, 32)  # Dark Green
         logging.info(f"Ambient Mode {ambient_mode} - Base Color: Dark Green")
     elif ambient_mode == 6: # Gallowforge
         color = (219, 208, 55)  # Yellow
