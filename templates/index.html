@@ -3,125 +3,249 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Control Panel</title>
+    <title>Gallowdark Control Panel</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <style>
+        /* General body styles for CRT look */
+        body {
+            background-color: #101010;
+            color: #33ff33;  /* CRT Green */
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1, h2 {
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            color: #33ff33;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px #33ff33;
+        }
+
+        /* Create a subtle flicker effect */
+        @keyframes crt-flicker {
+            0%, 100% {
+                opacity: 0.95;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        body {
+            animation: crt-flicker 0.1s infinite;
+        }
+
+        /* Add scanlines over the entire body */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(255, 255, 255, 0.02) 2px,
+                rgba(255, 255, 255, 0.02) 3px
+            );
+            pointer-events: none;
+        }
+
+        /* Style buttons */
+        button {
+            background-color: #202020;
+            border: 1px solid #33ff33;
+            color: #33ff33;
+            padding: 10px 20px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 0 0 5px #33ff33;
+            cursor: pointer;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #33ff33;
+            color: #101010;
+        }
+
+        /* Styled input elements */
+        input[type="text"], input[type="range"], select {
+            background-color: #202020;
+            border: 1px solid #33ff33;
+            color: #33ff33;
+            padding: 10px;
+            border-radius: 5px;
+            width: 50%;
+        }
+
+        /* Make sure the checkboxes look retro */
+        input[type="checkbox"] {
+            transform: scale(1.5);
+            margin: 5px;
+        }
+
+        /* Container for the app */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #000;
+            border: 2px solid #33ff33;
+            box-shadow: 0 0 20px #33ff33;
+        }
+
+        /* Title bar - gives that tech panel vibe */
+        .title-bar {
+            background-color: #202020;
+            padding: 10px;
+            border: 1px solid #33ff33;
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px #33ff33;
+        }
+
+        /* Specific vibe for Warhammer 40k feel */
+        .gothic-text {
+            font-family: 'UnifrakturMaguntia', cursive;
+            color: #ff0033;
+        }
+
+        /* Additional Warhammer 40k decorative styles */
+        .decorative-symbol {
+            font-size: 48px;
+            color: #ff0033;
+        }
+    </style>
 </head>
 <body>
-    <h1>Control Panel</h1>
-    
-    <h2>Ambience</h2>
-    <label for="ambience_mode">Mode:</label>
-    <select id="ambience_mode" name="ambience_mode" onchange="updateAmbience()">
-        <option value="2|music/gallowdark.ogg">Gallowdark</option>
-        <option value="3|music/gallowdeep.ogg">Gallowdeep</option>
-        <option value="4|music/gallowhive.ogg">Gallowhive</option>
-        <option value="5|music/gallowtomb.ogg">Gallowtomb</option>
-        <option value="6|music/gallowforge.ogg">Gallowforge</option>
-        <option value="7|music/gallowstone.ogg">Gallowstone</option>
-        <option value="8|music/gallowstorm.ogg">Gallowstorm</option>
-        <option value="9|music/gallowwar.ogg">Gallowwar</option>
-    </select>
-    <br>
-    
-    <h2>Audio</h2>
-    <label for="volume">Volume:</label>
-    <input type="range" id="volume" name="volume" min="0" max="100" value="{{ audio_config.get('volume', 100) }}">
-    <br>
-    <label for="music">Music Track:</label>
-    <select id="music" name="music">
-    <option value="">-- Select a Track --</option>
-    </select>
-    <br>
-    <label for="audio">Audio File:</label>
-    <input type="text" id="audio" name="audio" value="{{ audio_config.get('audio', '') }}">
-    <br>
-    <label for="play_audio_once">Play Audio Once:</label>
-    <input type="checkbox" id="play_audio_once" name="play_audio_once" {% if audio_config.get('play_audio_once', False) %}checked{% endif %}>
-    <br>
-    <button onclick="updateAudio()">Update Audio</button>
+    <div class="container">
+        <div class="title-bar">
+            <h1 class="gothic-text">Gallowdark Command</h1>
+            <div class="decorative-symbol">⚔</div>
+        </div>
 
-    <h2>Lights</h2>
-    <label for="brightness">Brightness:</label>
-    <input type="range" id="brightness" name="brightness" min="0" max="255" value="{{ light_config.get('brightness', 128) }}">
-    <br>
+        <h2>Ambience</h2>
+        <label for="ambience_mode">Mode:</label>
+        <select id="ambience_mode" name="ambience_mode" onchange="updateAmbience()">
+            <option value="2|music/gallowdark.ogg">Gallowdark</option>
+            <option value="3|music/gallowdeep.ogg">Gallowdeep</option>
+            <option value="4|music/gallowhive.ogg">Gallowhive</option>
+            <option value="5|music/gallowtomb.ogg">Gallowtomb</option>
+            <option value="6|music/gallowforge.ogg">Gallowforge</option>
+            <option value="7|music/gallowstone.ogg">Gallowstone</option>
+            <option value="8|music/gallowstorm.ogg">Gallowstorm</option>
+            <option value="9|music/gallowwar.ogg">Gallowwar</option>
+        </select>
+        <br>
 
-    <!-- New effect_type dropdown -->
-    <label for="effect_type">Effect Type:</label>
-    <select id="effect_type" name="effect_type">
-        <option value="pulse">Pulse</option>
-        <option value="flicker">Flicker</option>
-        <option value="wave">Wave</option>
-    </select>
-    <br>
+        <h2>Audio</h2>
+        <label for="volume">Volume:</label>
+        <input type="range" id="volume" name="volume" min="0" max="100" value="{{ audio_config.get('volume', 100) }}">
+        <br>
+        <label for="music">Music Track:</label>
+        <select id="music" name="music">
+            <option value="">-- Select a Track --</option>
+        </select>
+        <br>
+        <label for="audio">Audio File:</label>
+        <input type="text" id="audio" name="audio" value="{{ audio_config.get('audio', '') }}">
+        <br>
+        <label for="play_audio_once">Play Audio Once:</label>
+        <input type="checkbox" id="play_audio_once" name="play_audio_once" {% if audio_config.get('play_audio_once', False) %}checked{% endif %}>
+        <br>
+        <button onclick="updateAudio()">Update Audio</button>
 
-    <label for="show_override">Show Override:</label>
-    <input type="checkbox" id="show_override" name="show_override" {% if light_config.get('show_override', False) %}checked{% endif %}>
-    <br>
-    <button onclick="updateLights()">Update Lights</button>
+        <h2>Lights</h2>
+        <label for="brightness">Brightness:</label>
+        <input type="range" id="brightness" name="brightness" min="0" max="255" value="{{ light_config.get('brightness', 128) }}">
+        <br>
 
-    <h2>Missions</h2>
-    <label for="pack">Select Mission Pack:</label>
-    <select id="pack" name="pack" onchange="fetchMissions()">
-        <option value="">-- Select a Pack --</option>
-        {% for pack in missions %}
-            <option value="{{ pack }}">{{ pack }}</option>
-        {% endfor %}
-    </select>
-    <br>
-    <label for="mission">Select Mission:</label>
-    <select id="mission" name="mission">
-        <option value="">-- Select a Mission --</option>
-        <option value="none">None (Clear Overrides)</option>  <!-- None option added here -->
-    </select>
-    <br>
-    <button onclick="applyMission()">Apply Mission</button>
+        <!-- New effect_type dropdown -->
+        <label for="effect_type">Effect Type:</label>
+        <select id="effect_type" name="effect_type">
+            <option value="pulse">Pulse</option>
+            <option value="flicker">Flicker</option>
+            <option value="wave">Wave</option>
+        </select>
+        <br>
+
+        <label for="show_override">Show Override:</label>
+        <input type="checkbox" id="show_override" name="show_override" {% if light_config.get('show_override', False) %}checked{% endif %}>
+        <br>
+        <button onclick="updateLights()">Update Lights</button>
+
+        <h2>Missions</h2>
+        <label for="pack">Select Mission Pack:</label>
+        <select id="pack" name="pack" onchange="fetchMissions()">
+            <option value="">-- Select a Pack --</option>
+            {% for pack in missions %}
+                <option value="{{ pack }}">{{ pack }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <label for="mission">Select Mission:</label>
+        <select id="mission" name="mission">
+            <option value="">-- Select a Mission --</option>
+            <option value="none">None (Clear Overrides)</option>  <!-- None option added here -->
+        </select>
+        <br>
+        <button onclick="applyMission()">Apply Mission</button>
 
 
-    <script>
-    $(document).ready(function() {
-        fetchMusicTracks();
-    });
-
-    function fetchMusicTracks() {
-        $.ajax({
-            url: '/get_music_tracks',
-            type: 'GET',
-            success: function(musicFiles) {
-                const musicSelect = document.getElementById('music');
-                musicFiles.forEach(track => {
-                    const option = document.createElement('option');
-                    option.value = track;
-                    option.text = track;
-                    musicSelect.add(option);
-                });
-            }
+        <script>
+        $(document).ready(function() {
+            fetchMusicTracks();
         });
-    }
-        
- function updateAudio() {
-        const selectedMusic = document.getElementById('music').value;
-        const currentMusic = "{{ audio_config.get('music', '') }}";  // Get current music track from config
 
-        // Only set the music field if a track is selected, otherwise keep the existing track
-        const musicToSet = selectedMusic ? `music/${selectedMusic}` : currentMusic;
+        function fetchMusicTracks() {
+            $.ajax({
+                url: '/get_music_tracks',
+                type: 'GET',
+                success: function(musicFiles) {
+                    const musicSelect = document.getElementById('music');
+                    musicFiles.forEach(track => {
+                        const option = document.createElement('option');
+                        option.value = track;
+                        option.text = track;
+                        musicSelect.add(option);
+                    });
+                }
+            });
+        }
 
-        const data = {
-            volume: Number(document.getElementById('volume').value),
-            music: musicToSet,  // Use the selected music or the current one
-            audio: document.getElementById('audio').value,
-            play_audio_once: document.getElementById('play_audio_once').checked
-        };
-        
-        $.ajax({
-            url: '/update_audio',
-            type: 'POST',
-            data: JSON.stringify(data),
-            contentType: 'application/json',
-            success: function(response) {
-                console.log('Audio update response:', response);
-            }
-        });
-    }
+        function updateAudio() {
+            const selectedMusic = document.getElementById('music').value;
+            const currentMusic = "{{ audio_config.get('music', '') }}";  // Get current music track from config
+
+            // Only set the music field if a track is selected, otherwise keep the existing track
+            const musicToSet = selectedMusic ? `music/${selectedMusic}` : currentMusic;
+
+            const data = {
+                volume: Number(document.getElementById('volume').value),
+                music: musicToSet,  // Use the selected music or the current one
+                audio: document.getElementById('audio').value,
+                play_audio_once: document.getElementById('play_audio_once').checked
+            };
+
+            $.ajax({
+                url: '/update_audio',
+                type: 'POST',
+                data: JSON.stringify(data),
+                contentType: 'application/json',
+                success: function(response) {
+                    console.log('Audio update response:', response);
+                }
+            });
+        }
 
         function updateLights() {
             const data = {
@@ -140,57 +264,57 @@
             });
         }
 
-    function fetchMissions() {
-        const pack = document.getElementById('pack').value;
-        $.ajax({
-            url: '/get_missions',
-            type: 'POST',
-            data: JSON.stringify({ pack }),
-            contentType: 'application/json',
-            success: function(missions) {
-                const missionSelect = document.getElementById('mission');
-                missionSelect.innerHTML = '<option value="">-- Select a Mission --</option>';
-                missions.forEach(mission => {
-                    missionSelect.innerHTML += `<option value='${JSON.stringify(mission)}'>${mission.number}: ${mission.name}</option>`;
-                });
-                // Add the "None (Clear Overrides)" option to every pack
-                missionSelect.innerHTML += `<option value='none'>None (Clear Overrides)</option>`;
-            }
-        });
-    }
-
-    function applyMission() {
-        const missionValue = document.getElementById('mission').value;
-
-        // Handle 'None (Clear Overrides)' special case
-        let missionData;
-        if (missionValue === 'none') {
-            missionData = "none";  // Send the 'none' value to the server
-        } else {
-            missionData = JSON.parse(missionValue);
+        function fetchMissions() {
+            const pack = document.getElementById('pack').value;
+            $.ajax({
+                url: '/get_missions',
+                type: 'POST',
+                data: JSON.stringify({ pack }),
+                contentType: 'application/json',
+                success: function(missions) {
+                    const missionSelect = document.getElementById('mission');
+                    missionSelect.innerHTML = '<option value="">-- Select a Mission --</option>';
+                    missions.forEach(mission => {
+                        missionSelect.innerHTML += `<option value='${JSON.stringify(mission)}'>${mission.number}: ${mission.name}</option>`;
+                    });
+                    // Add the "None (Clear Overrides)" option to every pack
+                    missionSelect.innerHTML += `<option value='none'>None (Clear Overrides)</option>`;
+                }
+            });
         }
 
-        $.ajax({
-            url: '/apply_mission',
-            type: 'POST',
-            data: JSON.stringify(missionData),
-            contentType: 'application/json',
-            success: function(response) {
-                console.log('Mission applied:', response);
+        function applyMission() {
+            const missionValue = document.getElementById('mission').value;
+
+            // Handle 'None (Clear Overrides)' special case
+            let missionData;
+            if (missionValue === 'none') {
+                missionData = "none";  // Send the 'none' value to the server
+            } else {
+                missionData = JSON.parse(missionValue);
             }
-        });
-    }
-        
+
+            $.ajax({
+                url: '/apply_mission',
+                type: 'POST',
+                data: JSON.stringify(missionData),
+                contentType: 'application/json',
+                success: function(response) {
+                    console.log('Mission applied:', response);
+                }
+            });
+        }
+
         function updateAmbience() {
             const ambienceData = document.getElementById('ambience_mode').value.split('|');
             const ambient_mode = Number(ambienceData[0]);
             const music_track = ambienceData[1];
-    
+
             const data = {
                 ambient_mode: ambient_mode,
                 music: music_track
             };
-    
+
             $.ajax({
                 url: '/update_ambience',
                 type: 'POST',
@@ -201,6 +325,7 @@
                 }
             });
         }
-    </script>
+        </script>
+    </div>
 </body>
 </html>
