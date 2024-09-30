@@ -42,9 +42,18 @@
     <label for="brightness">Brightness:</label>
     <input type="range" id="brightness" name="brightness" min="0" max="255" value="{{ light_config.get('brightness', 128) }}">
     <br>
+
+    <!-- New effect_type dropdown -->
+    <label for="effect_type">Effect Type:</label>
+    <select id="effect_type" name="effect_type">
+        <option value="pulse">Pulse</option>
+        <option value="flicker">Flicker</option>
+        <option value="wave">Wave</option>
+    </select>
+    <br>
+
     <label for="show_override">Show Override:</label>
     <input type="checkbox" id="show_override" name="show_override" {% if light_config.get('show_override', False) %}checked{% endif %}>
-
     <br>
     <button onclick="updateLights()">Update Lights</button>
 
@@ -86,6 +95,7 @@
         function updateLights() {
             const data = {
                 brightness: Number(document.getElementById('brightness').value),
+                effect_type: document.getElementById('effect_type').value,  // Capture selected effect_type
                 show_override: document.getElementById('show_override').checked  // New toggle for show_override
             };
             $.ajax({
